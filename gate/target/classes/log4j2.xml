@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %message %n %throwable"
+                    charset="UTF-8"
+            />
+        </Console>
+        <RollingFile name="RollingFile"
+                     fileName="./logs/log-gate.log"
+                     filePattern="./logs/log-gate.%d{yyyyMMdd}-%i.gz">
+            <PatternLayout>
+                <charset>UTF-8</charset>
+                <pattern>
+                    [%-5p] %d [%t] [%X{rqId}] %x %c{1} %M - %message %n
+                </pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="outFileAppender"
+                     fileName="./logs/console.log"
+                     filePattern="./logs/console.%d{yyyyMMdd}-%i.gz">
+            <PatternLayout>
+                <charset>UTF-8</charset>
+                <pattern>
+                    %style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] [%X{rqId}] %style{%C{1.}}{bright,yellow}: %message %n %throwable</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+        <Logger name="org.lightning.digital.log.gate" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile" level="INFO"/>
+        </Logger>
+        <Logger name="org.springframework" level="INFO">
+            <AppenderRef ref="outFileAppender" level="INFO"/>
+        </Logger>
+    </Loggers>
+</configuration>

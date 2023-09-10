@@ -1,0 +1,9 @@
+FROM openjdk:17-jdk-slim
+
+WORKDIR ./app
+
+COPY ./target/log-gate.jar ./lg.jar
+
+EXPOSE 8080
+
+CMD  ["java", "-Dspring.profiles.active=prod", "-jar", "lg.jar"]

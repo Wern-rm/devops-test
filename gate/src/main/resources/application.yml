@@ -1,0 +1,25 @@
+springdoc:
+    show-actuator: true
+    swagger-ui:
+        path: /swagger-ui.html
+    packages-to-scan: org.lightning.digital.log.gate.controllers
+spring:
+    mvc:
+        pathmatch:
+            matching-strategy: ANT_PATH_MATCHER
+    main:
+        web-application-type: servlet
+    datasource:
+        postgresql:
+            driver-class-name: org.postgresql.Driver
+            url: ${DB_URL}
+            username: ${DB_USERNAME}
+            password: ${DB_PASSWORD}
+        hikari:
+            maximum-pool-size: ${POOL_SIZE}
+            connection-timeout: ${CONNECT_TIMEOUT}
+            minimum-idle: 5
+info:
+    backend:
+        name: "LogGate"
+        version: '@project.version@'
